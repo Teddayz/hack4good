@@ -1,15 +1,16 @@
 // firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyCl6DCKGh9TINXn9nuzfq6KdM8XgToZy1A",
+  authDomain: "hack4good-2d884.firebaseapp.com",
+  projectId: "hack4good-2d884",
+  storageBucket: "hack4good-2d884.firebasestorage.app",
+  messagingSenderId: "674470747933",
+  appId: "1:674470747933:web:ace9db60fa6aedaf04cbf4",
+  measurementId: "G-FG7GJF25L8"
 };
 
 // Initialize Firebase
