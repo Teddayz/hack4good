@@ -1,0 +1,54 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Apples",
+      "price": 1.5
+    },
+    {
+      "id": "2",
+      "name": "Bananas",
+      "price": 0.8
+    },
+    {
+      "id": "3",
+      "name": "Carrots",
+      "price": 1.2
+    }
+  ],
+  "requests": [
+    {
+      "id": "1",
+      "resident": "John Doe",
+      "items": [
+        {
+          "name": "Apples",
+          "quantity": 2
+        }
+      ],
+      "status": "Pending"
+    },
+    {
+      "id": "2",
+      "resident": "Jane Smith",
+      "items": [
+        {
+          "name": "Bananas",
+          "quantity": 3
+        }
+      ],
+      "status": "Pending"
+    },
+    {
+      "id": "675c",
+      "resident": "John Doe",
+      "items": [
+        {
+          "name": "Apples",
+          "quantity": 2
+        }
+      ],
+      "status": "Pending"
+    }
+  ]
+}
