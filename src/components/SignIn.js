@@ -12,7 +12,7 @@ const SignIn = () => {
 
   const handleSignIn = async () => {
     try {
-      const user = await signInUser(email, password);
+      await signInUser(email, password); // Call the function without assigning its return value
       navigate("/resident"); // Navigate to home page after successful sign-in
     } catch (error) {
       if (
@@ -27,6 +27,7 @@ const SignIn = () => {
       }
     }
   };
+  
 
   const navigateToSignUp = () => {
     navigate("/signup");
@@ -39,7 +40,7 @@ const SignIn = () => {
   return (
     <div className="signin-container">
       <div className="signin-top">
-        <h1 className="signin-title">Muhammadiyah</h1>
+        <h1 className="signin-title">MUHAMMADIYAH</h1>
       </div>
 
       <div className="signin-bottom">

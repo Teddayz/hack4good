@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUpUser } from '../firebase'; // Import signUpUser
+import './SignUp.css';
+
 
 const SignUp = () => {
     const navigate = useNavigate();
