@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import ProductCatalog from "./ProductCatalog";
 import Cart from "./Cart";
 import OrderStatus from "./OrderStatus";
+import "./ResidentDashboard.css"; 
+import { saveOrderToFirestore } from '../firebaseConfig'; // Import Firestore function
+import { auth } from '../firebaseConfig'; // Import auth to get user info
 
 function ResidentDashboard() {
-  const [currentTab, setCurrentTab] = useState("catalog"); // Tracks the active tab
-  const [cartItems, setCartItems] = useState([]); // Tracks items added to the cart
+  const [currentTab, setCurrentTab] = useState("catalog");
+  const [cartItems, setCartItems] = useState([]);
 
-  // Adds a product to the cart
   const addToCart = (product) => {
     const existingProduct = cartItems.find((item) => item.id === product.id);
     if (existingProduct) {
@@ -21,59 +23,70 @@ function ResidentDashboard() {
     } else {
       setCartItems([...cartItems, { ...product, quantity: 1 }]);
     }
+    alert(`${product.name} added to the cart!`);
   };
 
-  // Removes an item from the cart
   const removeFromCart = (productId) => {
     setCartItems(cartItems.filter((item) => item.id !== productId));
   };
 
-  // Submits the cart as an order
-  const submitOrder = () => {
+  const submitOrder = async () => {
+    if (cartItems.length === 0) {
+        alert("Your cart is empty! Please add some items before submitting.");
+        return; 
+    }
+
+    const currentUser = auth.currentUser;
     const order = {
-      resident: "John Doe", // Replace with dynamic resident information if available
-      items: cartItems.map((item) => ({
-        name: item.name,
-        quantity: item.quantity,
-      })),
-      status: "Pending",
+        resident: currentUser && currentUser.displayName ? currentUser.displayName : "Guest",
+        items: cartItems.map((item) => ({
+            name: item.name,
+            quantity: item.quantity,
+        })),
     };
 
-    fetch("http://localhost:3000/requests", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(order),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Order submitted successfully!");
-          setCartItems([]); // Clear the cart
-          setCurrentTab("status"); // Navigate to the Order Status tab
-        } else {
-          alert("Failed to submit order. Please try again.");
-        }
-      })
-      .catch((error) => {
+    try {
+        await saveOrderToFirestore(order); // Save the order to Firestore
+        alert("Order submitted successfully!");
+        setCartItems([]); // Clear the cart
+        setCurrentTab("status"); // Switch to the status tab
+    } catch (error) {
         console.error("Error submitting order:", error);
-        alert("Error submitting order. Please try again.");
-      });
-  };
+        alert("Failed to submit order. Please try again.");
+    }
+};
+
 
   return (
-    <div>
-      <nav>
-        <button onClick={() => setCurrentTab("catalog")}>Catalog</button>
-        <button onClick={() => setCurrentTab("cart")}>Cart</button>
-        <button onClick={() => setCurrentTab("status")}>Order Status</button>
+    <div className="dashboard-container">
+      <nav className="dashboard-nav">
+        <button
+          className={`nav-button ${currentTab === "catalog" ? "active" : ""}`}
+          onClick={() => setCurrentTab("catalog")}
+        >
+          Catalog
+        </button>
+        <button
+          className={`nav-button ${currentTab === "cart" ? "active" : ""}`}
+          onClick={() => setCurrentTab("cart")}
+        >
+          Cart ({cartItems.length})
+        </button>
+        <button
+          className={`nav-button ${currentTab === "status" ? "active" : ""}`}
+          onClick={() => setCurrentTab("status")}
+        >
+          Order Status
+        </button>
       </nav>
 
-      <main>
+      <main className="dashboard-main">
         {currentTab === "catalog" && <ProductCatalog addToCart={addToCart} />}
         {currentTab === "cart" && (
           <Cart
             cartItems={cartItems}
             removeFromCart={removeFromCart}
-            submitOrder={submitOrder}
+            submitOrder={submitOrder}  // Submit order to Firestore
           />
         )}
         {currentTab === "status" && <OrderStatus />}

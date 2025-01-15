@@ -1,8 +1,8 @@
-// firebaseConfig.js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCl6DCKGh9TINXn9nuzfq6KdM8XgToZy1A",
   authDomain: "hack4good-2d884.firebaseapp.com",
@@ -17,3 +17,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Reference to the 'orders' collection
+const ordersRef = collection(db, 'orders');
+
+// Function to save order to Firestore
+export const saveOrderToFirestore = async (order) => {
+  try {
+    await addDoc(ordersRef, {
+      ...order,
+      createdAt: serverTimestamp(), // Timestamp for the order
+    });
+  } catch (error) {
+    console.error("Error saving order:", error);
+    throw error; // Throw error to be caught in the component
+  }
+};

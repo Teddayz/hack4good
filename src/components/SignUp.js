@@ -1,9 +1,9 @@
-// SignUp.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUpUser } from '../firebase'; // Import signUpUser
+import { updateProfile } from 'firebase/auth'; // Import updateProfile from Firebase
 import './SignUp.css';
-
+import { auth } from '../firebaseConfig';  // Adjust the path based on your actual file structure
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -19,12 +19,20 @@ const SignUp = () => {
                 alert('All fields are required');
                 return;
             }
-
+    
             // Create user with email and password
             const user = await signUpUser(email, password);
-            alert('User Account Created. Please Login.');
+    
+            // Set display name for the new user
+            await updateProfile(user, {
+                displayName: `${firstName} ${lastName}`, // Set the display name to first and last name
+            });
+    
+            // Log the current user and display name to check if it's set correctly
+            const currentUser = auth.currentUser;
+            console.log("Current user display name:", currentUser ? currentUser.displayName : "No user found");
             console.log('User account created:', user);
-
+            
             alert('Your account was successfully created! Please sign in to continue.');
             navigate('/signIn');  // Redirect to the sign-in page
         } catch (error) {
@@ -41,11 +49,11 @@ const SignUp = () => {
             }
         }
     };
+    
 
     return (
         <div className="container">
             <button className="back-button" onClick={() => navigate('/signIn')}>Back</button>
-
             <div className="form-container">
                 <h2>Create Account</h2>
                 <form className="form" onSubmit={handleSignUp}>
@@ -81,7 +89,6 @@ const SignUp = () => {
                 </form>
             </div>
         </div>
-        
     );
 };
 
