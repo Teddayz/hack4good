@@ -22,6 +22,7 @@ const SignUp = () => {
 
             // Create user with email and password
             const user = await signUpUser(email, password);
+            alert('User Account Created. Please Login.');
             console.log('User account created:', user);
 
             alert('Your account was successfully created! Please sign in to continue.');
@@ -43,12 +44,9 @@ const SignUp = () => {
 
     return (
         <div className="container">
-            <div className="top-section">
-                <h1>Join Us</h1>
-            </div>
+            <button className="back-button" onClick={() => navigate('/signIn')}>Back</button>
 
             <div className="form-container">
-                <button className="back-button" onClick={() => navigate('/signIn')}>Back</button>
                 <h2>Create Account</h2>
                 <form className="form" onSubmit={handleSignUp}>
                     <input
@@ -83,6 +81,7 @@ const SignUp = () => {
                 </form>
             </div>
         </div>
+        
     );
 };
 

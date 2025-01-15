@@ -39,10 +39,6 @@ const SignIn = () => {
 
   return (
     <div className="signin-container">
-      <div className="signin-top">
-        <h1 className="signin-title">MUHAMMADIYAH</h1>
-      </div>
-
       <div className="signin-bottom">
         <h2 className="signin-heading">Welcome Back</h2>
         <div className="signin-form">
@@ -74,6 +70,7 @@ const SignIn = () => {
       </div>
     </div>
   );
+  
 };
 
 export default SignIn;

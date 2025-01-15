@@ -94,13 +94,18 @@
   }
   
   .back-button {
-    color: var(--text-color);
-    background: none;
-    border: none;
+    align-self: flex-start;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 5px 8px;
     font-size: 14px;
-    text-decoration: underline;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
   }
   
   .back-button:hover {
