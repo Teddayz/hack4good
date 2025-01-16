@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { db } from '../firebaseConfig';
+import { collection, getDocs, query, onSnapshot, doc, updateDoc, addDoc } from 'firebase/firestore';
 
 const dummyProducts = [
   { id: 1, name: "Apples", price: 1.5 },
@@ -7,11 +9,31 @@ const dummyProducts = [
 ];
 
 function ProductCatalog({ addToCart }) {
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const productList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProducts(productList);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div>
       <h2>Product Catalog</h2>
       <div>
-        {dummyProducts.map((product) => (
+        {products.map((product) => (
           <div key={product.id}>
             <h3>{product.name}</h3>
             <p>Price: ${product.price}</p>

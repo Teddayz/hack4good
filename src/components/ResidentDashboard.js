@@ -5,6 +5,7 @@ import OrderStatus from "./OrderStatus";
 import "./ResidentDashboard.css"; 
 import { saveOrderToFirestore } from '../firebaseConfig'; // Import Firestore function
 import { auth } from '../firebaseConfig'; // Import auth to get user info
+import { signOut } from 'firebase/auth';
 
 function ResidentDashboard() {
   const [currentTab, setCurrentTab] = useState("catalog");
@@ -60,6 +61,17 @@ function ResidentDashboard() {
     }
 };
 
+const handleLogout = async () => {
+    try {
+      await signOut(auth); // Firebase sign-out method
+      alert('Logged out successfully');
+      // Optionally redirect to login page
+      window.location.href = '/signin';  // Adjust the path as needed
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
+
 
   return (
     <div className="dashboard-container">
@@ -82,6 +94,9 @@ function ResidentDashboard() {
         >
           Order Status
         </button>
+        {/* Logout Button */}
+        <button className={`nav-button ${currentTab === "status" ? "active" : ""}`}
+        onClick={handleLogout}>Logout</button>
       </nav>
 
       <main className="dashboard-main">
