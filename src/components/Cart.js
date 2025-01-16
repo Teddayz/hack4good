@@ -17,7 +17,7 @@ function Cart({ cartItems, removeFromCart, submitOrder }) {
         </ul>
       )}
       {cartItems.length > 0 && (
-        <button onClick={submitOrder}>Place Order</button>
+        <button onClick={() => submitOrder()}>Place Order</button>
       )}
     </div>
   );

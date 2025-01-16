@@ -33,7 +33,7 @@ function ResidentDashboard() {
   const submitOrder = async () => {
     if (cartItems.length === 0) {
         alert("Your cart is empty! Please add some items before submitting.");
-        return; 
+        return;
     }
 
     const currentUser = auth.currentUser;
@@ -43,13 +43,17 @@ function ResidentDashboard() {
             name: item.name,
             quantity: item.quantity,
         })),
+        status: "Pending",
+        estimatedTime: null,
+        timestamp: new Date().toISOString(),
     };
 
     try {
-        await saveOrderToFirestore(order); // Save the order to Firestore
+        const orderId = await saveOrderToFirestore(order); // Get the Firestore-generated ID
+        console.log('Created order with ID:', orderId); // Debug log
         alert("Order submitted successfully!");
-        setCartItems([]); // Clear the cart
-        setCurrentTab("status"); // Switch to the status tab
+        setCartItems([]);
+        setCurrentTab("status");
     } catch (error) {
         console.error("Error submitting order:", error);
         alert("Failed to submit order. Please try again.");

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signUpUser } from '../firebase'; // Import signUpUser
+import { signUpUser, setUserRole } from '../firebase'; // Import signUpUser and setUserRole
 import { updateProfile } from 'firebase/auth'; // Import updateProfile from Firebase
 import './SignUp.css';
 import { auth } from '../firebaseConfig';  // Adjust the path based on your actual file structure
@@ -11,11 +11,12 @@ const SignUp = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('resident'); // Add role state
 
     const handleSignUp = async (e) => {
         e.preventDefault();  // Prevent default form behavior
         try {
-            if (!firstName || !lastName || !email || !password) {
+            if (!firstName || !lastName || !email || !password || !role) {
                 alert('All fields are required');
                 return;
             }
@@ -27,6 +28,10 @@ const SignUp = () => {
             await updateProfile(user, {
                 displayName: `${firstName} ${lastName}`, // Set the display name to first and last name
             });
+    
+            // Store user role in your database or user profile
+            // You'll need to implement this function in your firebase.js
+            await setUserRole(user.uid, role);
     
             // Log the current user and display name to check if it's set correctly
             const currentUser = auth.currentUser;
@@ -85,6 +90,17 @@ const SignUp = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+                    <div className="role-selector">
+                        <label>Account Type:</label>
+                        <select 
+                            value={role} 
+                            onChange={(e) => setRole(e.target.value)}
+                            required
+                        >
+                            <option value="resident">Resident</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
                     <button type="submit" className="submit-button">Sign Up</button>
                 </form>
             </div>

@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { auth, db } from './firebaseConfig'; // Make sure to import db
 
 // Import Firestore functions
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, doc, setDoc } from 'firebase/firestore';
 
 // Sign up function
 export const signUpUser = async (email, password) => {
@@ -17,10 +17,10 @@ export const signUpUser = async (email, password) => {
 // Sign in function
 export const signInUser = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    return userCredential.user; // Return the user object on success
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    return result;  // This returns UserCredential object
   } catch (error) {
-    throw error; // Throw error to be caught in the component
+    throw error;
   }
 };
 
@@ -37,3 +37,19 @@ export const saveOrderToFirestore = async (order) => {
     throw error;
   }
 };
+
+// Add this function to your firebase.js
+export const setUserRole = async (userId, role) => {
+    try {
+        const userRef = doc(db, 'users', userId);
+        await setDoc(userRef, {
+            role: role,
+            createdAt: serverTimestamp()
+        });
+    } catch (error) {
+        console.error('Error setting user role:', error);
+        throw error;
+    }
+};
+
+export { db };
