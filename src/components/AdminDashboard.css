@@ -1,0 +1,80 @@
+:root {
+    --primary-color: #eaf4f4;
+    --secondary-color: #d3e0ea;
+    --accent-color: #b0c4de;
+    --button-hover: #a1bfcf;
+    --error-color: #ff6b6b;
+    --text-color: #5c677d;
+    --border-radius: 15px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+  }
+  
+  .admin-dashboard {
+    padding: 20px;
+  }
+  
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logout-button {
+    background-color: var(--error-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #ff8787;
+  }
+  
+  .product-form input,
+  .product-form button {
+    margin: 10px;
+  }
+  
+  .orders-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .order-card {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    flex: 1 1 calc(33% - 30px);
+    min-width: 250px;
+  }
+  
+  .status-badge {
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+  }
+  
+  .status-badge.pending {
+    background-color: orange;
+  }
+  
+  .status-badge.approved {
+    background-color: green;
+    color: white;
+  }
+  
+  .status-badge.rejected {
+    background-color: red;
+    color: white;
+  }
+  

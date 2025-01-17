@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { db } from '../firebaseConfig';
-import { collection, getDocs, query, onSnapshot, doc, updateDoc, addDoc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
-const dummyProducts = [
-  { id: 1, name: "Apples", price: 1.5 },
-  { id: 2, name: "Bananas", price: 0.8 },
-  { id: 3, name: "Carrots", price: 1.2 },
-];
+// const dummyProducts = [
+//   { id: 1, name: "Apples", price: 1.5 },
+//   { id: 2, name: "Bananas", price: 0.8 },
+//   { id: 3, name: "Carrots", price: 1.2 },
+// ];
 
 function ProductCatalog({ addToCart }) {
 
