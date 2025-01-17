@@ -5,6 +5,7 @@ import { signOut } from 'firebase/auth';
 import './AdminDashboard.css';
 
 function AdminDashboard() {
+  const [activeTab, setActiveTab] = useState('orders');
   const [orders, setOrders] = useState([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -110,110 +111,134 @@ function AdminDashboard() {
         </button>
       </header>
 
-      <section className="product-section">
-        <h2>Add Product</h2>
-        <form className="product-form" onSubmit={addProduct}>
-          <input
-            type="text"
-            placeholder="Product Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <button type="submit">Add Product</button>
-        </form>
+      <nav className="admin-tabs">
+        <button
+          className={`tab-button ${activeTab === 'orders' ? 'active' : ''}`}
+          onClick={() => setActiveTab('orders')}
+        >
+          Orders
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'addProduct' ? 'active' : ''}`}
+          onClick={() => setActiveTab('addProduct')}
+        >
+          Add Product
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'manageProducts' ? 'active' : ''}`}
+          onClick={() => setActiveTab('manageProducts')}
+        >
+          Manage Products
+        </button>
+      </nav>
 
-        <h2>Manage Products</h2>
-        <div className="product-list">
-          {Object.entries(products).map(([id, product]) => (
-            <div key={id} className="product-card">
-              <p>
-                <strong>Name:</strong> {product.name}
-              </p>
-              <p>
-                <strong>Price:</strong> ${product.price.toFixed(2)}
-              </p>
-              <button onClick={() => deleteProduct(id)} className="delete-button">
-                Delete
-              </button>
+      <div className="tab-content">
+        {activeTab === 'orders' && (
+          <section className="orders-section">
+            <h2>Orders</h2>
+            <div className="filter-buttons">
+              {['All', 'Pending', 'Approved', 'Rejected'].map((status) => (
+                <button
+                  key={status}
+                  className={`filter-button ${filter === status ? 'active' : ''}`}
+                  onClick={() => setFilter(status)}
+                >
+                  {status}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="orders-section">
-        <h2>Orders</h2>
-        <div className="filter-buttons">
-          {['All', 'Pending', 'Approved', 'Rejected'].map((status) => (
-            <button
-              key={status}
-              className={`filter-button ${filter === status ? 'active' : ''}`}
-              onClick={() => setFilter(status)}
-            >
-              {status}
-            </button>
-          ))}
-        </div>
-        {loading ? (
-          <p>Loading orders...</p>
-        ) : filteredOrders.length === 0 ? (
-          <p>No orders available</p>
-        ) : (
-          <div className="orders-container">
-            {filteredOrders.map((order) => (
-              <div
-                key={order.id}
-                className={`order-card ${order.status ? order.status.toLowerCase() : ''}`}
-              >
-                <p>
-                  <strong>Order ID:</strong> {order.id}
-                </p>
-                <p>
-                  <strong>Resident:</strong> {order.resident}
-                </p>
-                <p>
-                  <strong>Status:</strong>{' '}
-                  <span className={`status-badge ${order.status?.toLowerCase() || ''}`}>
-                    {order.status || 'Unknown'}
-                  </span>
-                </p>
-                <h4>Items:</h4>
-                <ul>
-                  {order.items.map((item, index) => {
-                    const product = Object.values(products).find(
-                      (product) => product.name === item.name
-                    );
-                    return (
-                      <li key={index}>
-                        {item.name} (x{item.quantity}) - $
-                        {product ? product.price.toFixed(2) : 'N/A'}
-                      </li>
-                    );
-                  })}
-                </ul>
-                {order.status === 'Pending' && (
-                  <div className="action-buttons">
-                    <button onClick={() => updateOrderStatus(order.id, 'Approved')}>
-                      Approve
-                    </button>
-                    <button onClick={() => updateOrderStatus(order.id, 'Rejected')}>
-                      Reject
-                    </button>
+            {loading ? (
+              <p>Loading orders...</p>
+            ) : filteredOrders.length === 0 ? (
+              <p>No orders available</p>
+            ) : (
+              <div className="orders-container">
+                {filteredOrders.map((order) => (
+                  <div
+                    key={order.id}
+                    className={`order-card ${order.status ? order.status.toLowerCase() : ''}`}
+                  >
+                    <p>
+                      <strong>Order ID:</strong> {order.id}
+                    </p>
+                    <p>
+                      <strong>Resident:</strong> {order.resident}
+                    </p>
+                    <p>
+                      <strong>Status:</strong>{' '}
+                      <span className={`status-badge ${order.status?.toLowerCase() || ''}`}>
+                        {order.status || 'Unknown'}
+                      </span>
+                    </p>
+                    <h4>Items:</h4>
+                    <ul>
+                      {order.items.map((item, index) => (
+                        <li key={index}>
+                          {item.name} (x{item.quantity})
+                        </li>
+                      ))}
+                    </ul>
+                    {order.status === 'Pending' && (
+                      <div className="action-buttons">
+                        <button onClick={() => updateOrderStatus(order.id, 'Approved')}>
+                          Approve
+                        </button>
+                        <button onClick={() => updateOrderStatus(order.id, 'Rejected')}>
+                          Reject
+                        </button>
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
+            )}
+          </section>
         )}
-      </section>
+
+        {activeTab === 'addProduct' && (
+          <section className="product-section">
+            <h2>Add Product</h2>
+            <form className="product-form" onSubmit={addProduct}>
+              <input
+                type="text"
+                placeholder="Product Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              <button type="submit">Add Product</button>
+            </form>
+          </section>
+        )}
+
+        {activeTab === 'manageProducts' && (
+          <section className="manage-products-section">
+            <h2>Manage Products</h2>
+            <div className="product-list">
+              {Object.entries(products).map(([id, product]) => (
+                <div key={id} className="product-card">
+                  <p>
+                    <strong>Name:</strong> {product.name}
+                  </p>
+                  <p>
+                    <strong>Price:</strong> ${product.price.toFixed(2)}
+                  </p>
+                  <button onClick={() => deleteProduct(id)} className="delete-button">
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   );
 }
 
 export default AdminDashboard;
-
