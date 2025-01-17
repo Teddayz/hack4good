@@ -1,110 +1,95 @@
-/* General Styles */
+:root {
+  --primary-color: #eaf4f4;
+  --secondary-color: #d3e0ea;
+  --accent-color: #b0c4de;
+  --button-hover: #a1bfcf;
+  --error-color: #ff6b6b;
+  --text-color: #5c677d;
+  --border-radius: 15px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .dashboard-container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 0;
-    margin: 0;
-    background-color: #f4f7fa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  /* Navigation Bar Styles */
-  .dashboard-nav {
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    padding: 15px 0;
-    width: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .nav-button {
-    background-color: transparent;
-    border: none;
-    padding: 12px 25px;
-    font-size: 18px;
-    color: #555;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 0 10px;
-  }
-  
-  .nav-button.active {
-    color: #007bff;
-    border-bottom: 3px solid #007bff;
-  }
-  
-  .nav-button:hover {
-    color: #0056b3;
-    transform: translateY(-3px);
-  }
-  
-  /* Main Content Styles */
-  .dashboard-main {
-    padding: 30px 20px;
-    max-width: 1200px;
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .dashboard-main > div {
-    margin-bottom: 30px;
-  }
-  
-  /* Catalog, Cart, and Order Status Styles */
-  .catalog, .cart, .status {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  .catalog h2, .cart h2, .status h2 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 15px;
-  }
-  
-  .cart-button, .add-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
-  
-  .cart-button:hover, .add-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-  }
-  
-  .cart-item span {
-    font-size: 18px;
-    color: #555;
-  }
-  
-  .cart-item button {
-    background-color: transparent;
-    border: none;
-    color: #dc3545;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
-  
-  .cart-item button:hover {
-    color: #c82333;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.dashboard-nav {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  width: 100%;
+  border-radius: var(--border-radius);
+}
+
+.nav-button {
+  background: var(--accent-color);
+  border: none;
+  padding: 12px 25px;
+  font-size: 18px;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 10px;
+  border-radius: var(--border-radius);
+}
+
+.nav-button.active {
+  background: var(--button-hover); 
+  border-bottom: 3px solid var(--accent-color);
+}
+
+.nav-button:hover {
+  color: var(--text-color);
+  transform: translateY(-3px);
+}
+
+.catalog, .cart, .status {
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.cart-button, .add-button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.cart-button:hover, .add-button:hover {
+  background-color: var(--button-hover);
+  transform: scale(1.05);
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+}
+
+.status-badge.pending {
+  background-color: orange;
+}
+
+.status-badge.approved {
+  background-color: green;
+  color: white;
+}
+
+.status-badge.rejected {
+  background-color: red;
+  color: white;
+}
+

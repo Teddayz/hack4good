@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from '../firebaseConfig';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { auth } from '../firebaseConfig';
+import "./OrderStatus.css";
 
 function OrderStatus() {
   const [orders, setOrders] = useState([]);
@@ -31,48 +32,47 @@ function OrderStatus() {
     return () => unsubscribe();
   }, []);
 
-  const getStatusStyle = (status) => {
+  const getStatusClass = (status) => {
     switch(status) {
       case 'Approved':
-        return { backgroundColor: '#e6ffe6' }; // light green
+        return "status-approved";
       case 'Rejected':
-        return { backgroundColor: '#ffe6e6' }; // light red
+        return "status-rejected";
       default:
-        return {}; // default white background
+        return "status-pending";
     }
   };
 
   return (
-    <div>
+    <div className="order-status-container">
       <h2>Order Status</h2>
       {orders.length === 0 ? (
         <p>You have no orders yet.</p>
       ) : (
-        orders.map((order) => (
-          <div 
-            key={order.id} 
-            style={{
-              border: "1px solid gray", 
-              margin: "10px", 
-              padding: "10px",
-              ...getStatusStyle(order.status)
-            }}
-          >
-            <p>Order ID: {order.id}</p>
-            <p>Status: {order.status}</p>
-            {order.estimatedTime && <p>Estimated Time: {order.estimatedTime}</p>}
-            <div>
-              <h4>Items:</h4>
-              <ul>
-                {order.items.map((item, index) => (
-                  <li key={index}>
-                    {item.name} (x{item.quantity})
-                  </li>
-                ))}
-              </ul>
+        <div className="orders-list">
+          {orders.map((order) => (
+            <div 
+              className={`order-card ${getStatusClass(order.status)}`}
+              key={order.id}
+            >
+              <p><strong>Order ID:</strong> {order.id}</p>
+              <p><strong>Status:</strong> {order.status}</p>
+              {order.estimatedTime && (
+                <p><strong>Estimated Time:</strong> {order.estimatedTime}</p>
+              )}
+              <div>
+                <h4>Items:</h4>
+                <ul>
+                  {order.items.map((item, index) => (
+                    <li key={index}>
+                      {item.name} (x{item.quantity})
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-        ))
+          ))}
+        </div>
       )}
     </div>
   );

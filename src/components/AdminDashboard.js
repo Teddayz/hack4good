@@ -23,7 +23,13 @@ function AdminDashboard() {
         ...doc.data(),
         id: doc.id,
       }));
-      setOrders(ordersList);
+
+      // Sort orders by timestamp (newest first)
+      const sortedOrders = ordersList.sort((a, b) => 
+        new Date(b.timestamp) - new Date(a.timestamp)
+      );
+
+      setOrders(sortedOrders);
       setLoading(false);
     });
 

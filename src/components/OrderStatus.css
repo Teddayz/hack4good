@@ -1,0 +1,68 @@
+.order-status-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .order-status-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+  }
+  
+  .orders-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .order-card {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    flex: 1 1 calc(33% - 30px); /* Responsive layout */
+    min-width: 250px;
+    text-align: left;
+    transition: transform 0.3s ease;
+  }
+  
+  .order-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .order-card p {
+    font-size: 16px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+  }
+  
+  .order-card h4 {
+    font-size: 18px;
+    color: var(--text-color);
+    margin-top: 20px;
+  }
+  
+  .order-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-card li {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 5px;
+  }
+  
+  .status-approved {
+    background-color: #e6ffe6; /* Light green */
+  }
+  
+  .status-rejected {
+    background-color: #ffe6e6; /* Light red */
+  }
+  
+  .status-pending {
+    background-color: #fff; /* Default white */
+  }
+  

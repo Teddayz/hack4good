@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from '../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
+import "./ProductCatalog.css"; 
 
 // const dummyProducts = [
 //   { id: 1, name: "Apples", price: 1.5 },
@@ -30,14 +31,24 @@ function ProductCatalog({ addToCart }) {
   }, []);
 
   return (
-    <div>
-      <h2>Product Catalog</h2>
-      <div>
+    <div className="product-catalog">
+      <h2>Catalog</h2>
+      <div className="catalog-grid">
         {products.map((product) => (
-          <div key={product.id}>
-            <h3>{product.name}</h3>
-            <p>Price: ${product.price}</p>
-            <button onClick={() => addToCart(product)}>Add to Cart</button>
+          <div className="product-card" key={product.id}>
+            <img
+              src={product.image || "https://via.placeholder.com/150"} // Use a placeholder image if none is provided
+              alt={product.name}
+              className="product-image"
+            />
+            <h3 className="product-name">{product.name}</h3>
+            <p className="product-price">Price: ${product.price.toFixed(2)}</p>
+            <button
+              className="add-to-cart-button"
+              onClick={() => addToCart(product)}
+            >
+              Add to Cart
+            </button>
           </div>
         ))}
       </div>

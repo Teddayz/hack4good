@@ -8,6 +8,59 @@
     --border-radius: 15px;
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+  /* General Button Styles */
+.tab-button, .filter-button, .action-buttons button, .delete-button {
+  background: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 10px; /* Smooth corners */
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin: 5px; /* Spacing between buttons */
+}
+
+.tab-button.active, .filter-button.active {
+  background: var(--button-hover); 
+  color: var(--text-color);
+  transform: translateY(-2px); /* Lift effect */
+}
+
+.tab-button:hover, .filter-button:hover, .action-buttons button:hover, .delete-button:hover {
+  background: var(--button-hover); /* Darker gradient on hover */
+  transform: translateY(-3px); /* Enhanced lift on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+/* Action Button Styles */
+.action-buttons button {
+  background:#138496; /* Teal gradient */
+}
+
+.action-buttons button:hover {
+  background:#0c5460; /* Darker teal on hover */
+}
+
+/* Delete Button */
+.delete-button {
+  background: var(--error-color); /* Red gradient */
+}
+
+.delete-button:hover {
+  background: #bd2130; /* Darker red on hover */
+}
+
+/* Responsive Buttons */
+@media (max-width: 768px) {
+  .tab-button, .filter-button, .action-buttons button, .delete-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
   
   body {
     font-family: 'Arial', sans-serif;
